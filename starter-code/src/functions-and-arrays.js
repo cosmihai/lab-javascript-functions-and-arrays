@@ -1,9 +1,9 @@
 // Find the maximum
-function maxOfTwoNumbers(num1, num2) {
-  if(num1>=num2) {
-    return num1;
-  }else { 
-    return num2;
+function maxOfTwoNumbers(a,b) {
+  if(a>b){
+    return a
+  }else {
+    return b
   }
 }
 
@@ -17,43 +17,34 @@ var words = [
   'orchard',
   'crackpot'
 ];
-function findLongestWord(array) {
-  var longestWord;
-  if(array.length!==0){
-    var maxLength=array[0].length;
-    longestWord=array[0];
-    array.forEach(function(word){
-      if(word.length>maxLength){
-        maxLength=word.length;
-        longestWord=word;
-      }
-    })
-  }
-  return longestWord;
+
+function findLongestWord(words){
+  var longestWord = words[0]
+  words.forEach(word => {
+    if (longestWord.length<word.length){
+      longestWord = word;
+    }
+  });
+  return longestWord
 }
 
 // Calculating a Sum
 
 var numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
+
 function sumArray(array) {
-  var sum=0;
-  if(array.length!==0){
-    array.forEach(function(number){
-      sum+=number;
-    })
-  }
-  return sum;
+  var total =  array.reduce((acc, curr) =>  acc+curr, 0);
+  return total
 }
 
 // Calculate the Average
 
 var numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
-function averageNumbers(array) {
-  var average;
-  if(array.length!==0) {
-    average=sumArray(array)/array.length;
+
+function averageNumbers(numbers) {
+  if(numbers.length){
+    return sumArray(numbers)/numbers.length
   }
-  return average;
 }
 
 // Array of Strings
@@ -69,16 +60,13 @@ var wordsArr = [
   'fuel',
   'palace'
 ];
-function averageWordLength(array) {
-  var average;
-  var sum=0;
-  if(array.length!==0) {
-    array.forEach(function(word){
-      sum+=word.length;
-    })
-    average=sum/array.length;
+
+function averageWordLength(words){
+  if(words.length) {
+    var acc = 0;
+    words.forEach(word => acc+=word.length);
+    return acc/words.length
   }
-  return average;
 }
 
 // Unique Arrays
@@ -96,27 +84,11 @@ var wordsUnique = [
   'bring'
 ];
 function uniquifyArray(array) {
-  var doubleElementIndex=[];
-  var uniqueArray=[];
-  var itemToCompare;
-  for(var i=0; i<array.length; i++){
-    itemToCompare=array[i];
-    
-    for(var j=i+1; j<array.length; j++) {
-      if(itemToCompare===array[j]) {
-        doubleElementIndex.push(array.indexOf(array[j]));
-      }
-    }
+  if(array.length) {
+    return array.filter( (value, index, self) =>{ 
+      return self.indexOf(value) === index;
+    });
   }
-  /*
-  for(var i=0; i<array.length; i++) {
-    for(var j=0; j<doubleElementIndex.length; j++) {
-      if(i!==doubleElementIndex[j]) {
-        uniqueArray.push(array[i]);
-      }
-    }
-  }
-  */
 }
 
 // Finding Elements
@@ -130,14 +102,13 @@ var wordsFind = [
   'truth',
   'disobedience'
 ];
-function doesWordExist(array,string) {
-  var find=false;
-  array.forEach(function(item){
-    if(string===item) {
-      find=true;
-    }
-  })
-  return find;
+
+function doesWordExist(array, elem) {
+  if(array.length) {
+    return array.includes(elem)
+  }else{
+    return false
+  }
 }
 
 // Counting Repetion
@@ -154,16 +125,24 @@ var wordsCount = [
   'disobedience',
   'matter'
 ];
-function howManyTimes(array, string) {
-  var counter=0;
-  if(array.length!==0) {
-    array.forEach(function(item){
-      if(string===item) {
-        counter+=1;
-      }
-    })
-  }else counter=false;
-  return counter;
+
+function howManyTimes(array, elem) {
+  if(array.length) {
+
+    if(array.includes(elem)) {
+      var count = 0;
+      array.forEach(word => {
+        if (word===elem) {
+          count++
+        }
+      });
+      return count
+    }else {
+      return 0
+    }
+  }else {
+    return false
+  }
 }
 // Bonus Quest
 
@@ -189,3 +168,22 @@ var matrix = [
   [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54],
   [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]
 ];
+
+function greatestProduct(matrix) {
+  var maxProd = 0;
+  for (var i=0; i<matrix.length; i++){
+    for (var j=0; j<matrix[i].length-3; j++) {
+      if(matrix[i][j]*matrix[i][j+1]*matrix[i][j+2]*matrix[i][j+3]>=maxProd) {
+        maxProd = matrix[i][j]*matrix[i][j+1]*matrix[i][j+2]*matrix[i][j+3]
+      }      
+    }
+  }
+  for (var i=0; i<matrix.length-3; i++){
+    for (var j=0; j<matrix[i].length; j++) {
+      if(matrix[i][j]*matrix[i+1][j]*matrix[i+2][j]*matrix[i+3][j]>=maxProd) {
+        maxProd = matrix[i][j]*matrix[i+1][j]*matrix[i+2][j]*matrix[i+3][j]
+      }      
+    }
+  }
+  return maxProd
+}
